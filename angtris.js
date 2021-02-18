@@ -51,6 +51,7 @@ let board = function () {
         obj.nextshape = new shape(0,4);
         obj.score = 0;
         obj.speed = 990;
+        obj.highscore = localStorage.getItem("highscore") || 0;
     }
 
     // Drawing
@@ -97,8 +98,13 @@ let board = function () {
                             obj.currshape.movedown();
                             if (!obj.check(obj.currshape,false)) {
                                 // Game over
+                                let msgGameOver = "GAME OVER" + "\n" + "Score: " + obj.score;
+                                if (obj.score >= obj.highscore) {
+                                    localStorage.setItem("highscore",obj.score);
+                                    msgGameOver += "\n" + "New high score! Congratulations!";
+                                }
                                 obj.newboard();
-                                alert("GAME OVER")
+                                alert(msgGameOver);
 
                             } else {
                                 obj.currshape.moveup();
